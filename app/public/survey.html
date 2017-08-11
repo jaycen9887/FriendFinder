@@ -209,7 +209,6 @@
                 var url = window.location.origin;
                 
                 $.post(url + "/api/friends", response, function(res){
-                    console.log(res);
                     $("#match-name").text(res.name);
                     $("#profile-image").attr("src", res.photo);
                     
