@@ -16,6 +16,17 @@
     
     <!-- Materialize Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        #results{
+            text-align: center;
+            height: 100%;
+        }
+        
+        #results img{
+            width: 300px;
+        }
+    </style>
 
 </head>
 <body>
@@ -26,13 +37,13 @@
         
         <h5 style="text-align: center"><strong>About You</strong></h5>
         <div class="row">
-            <form class="col s12">
+            <form id="survey" method="POST" action="/api/friends" class="col s12">
                 <div class="row">
                     <div class="input-field col s12 m6 l6 xl6">
-                        <input placeholder="Name (Required)" id="name" type="text" class="validate">
+                        <input placeholder="Name (Required)" id="name" type="text">
                     </div>
                     <div class="input-field col s12 m6 l6 xl6">
-                        <input placeholder="Link to Photo Image (Required)" id="photo" type="text" class="validate">
+                        <input placeholder="Link to Photo Image (Required)" id="photo" type="text">
                     </div>
                 </div>
                 
@@ -49,7 +60,7 @@
                         <label>Question 1</label>
                     </div>
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q2">
                             <option value="" disabled selected>You follow your gut feeling over what your brain says.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -62,7 +73,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q3">
                             <option value="" disabled selected>You don't take critcism very well.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -73,7 +84,7 @@
                         <label>Question 3</label>
                     </div>
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q4">
                             <option value="" disabled selected>It takes a lot to make you mad.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -86,7 +97,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q5">
                             <option value="" disabled selected>You believe that LUCK plays a large part in your life.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -97,7 +108,7 @@
                         <label>Question 5</label>
                     </div>
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q6">
                             <option value="" disabled selected>You'd rather let someone else decide where you are going.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -110,7 +121,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q7">
                             <option value="" disabled selected>Your friends should have the same believe as you.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -121,7 +132,7 @@
                         <label>Question 7</label>
                     </div>
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q8">
                             <option value="" disabled selected>It takes a lot to make you mad.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -134,7 +145,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q9">
                             <option value="" disabled selected>You consider yourself an extrovert.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -145,7 +156,7 @@
                         <label>Question 9</label>
                     </div>
                     <div class="input-field col s12 m6 l6 xl6">
-                        <select id="q1">
+                        <select id="q10">
                             <option value="" disabled selected>You have a good relationship with your family.</option>
                             <option value="1">1 (Strongly Disagree)</option>
                             <option value="2">2</option>
@@ -157,22 +168,57 @@
                     </div>
                 </div>
                 <div class="col s12 center-align">
-                    <button style="margin: auto; background-color: #286090; width: 100%; border-radius: 5px" class="btn" type="submit" name="submit"><i class="material-icons">check</i> Submit</button>
+                    <a id="submit" class="waves-effect waves-light btn modal-trigger" href="#results" style="margin: auto; background-color: #286090; width: 100%; border-radius: 5px">Submit</a>
                 </div>
             </form>
         </div>
         <hr>
         <footer>
-            <a href="#">API Friends List</a> |
-            <a href="#">GitHub Repo</a>
+            <a href="/api/friends">API Friends List</a> |
+            <a href="https://github.com/jaycen9887/FriendFinder" target="_blank">GitHub Repo</a>
         </footer>
     </div>
+    <div id="results" class="modal">
+        <div class="modal-content">
+            <h4><strong>Best Match</strong></h4>
+            <h5 id="match-name"></h5>
+            <img id="profile-image">
+        </div>
+        <div class="modal-footer">
+            <a href="/" class="modal-action modal-close waves-effect btn">Close</a>
+        </div>
+    </div>
     
+    <!-- Added link to the jQuery Library -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
     
     <script>
         $(document).ready(function() {
-            Materialize.updateTextFields();
+           /* Materialize.updateTextFields();*/
             $('select').material_select();
+            
+            $("#submit").on("click", function(){
+                var response = {
+                    name: $("#name").val().trim(),
+                    photo: $("#photo").val().trim(),
+                    scores: [$("#q1").val().trim(), $("#q2").val().trim(), $("#q3").val().trim(), $("#q4").val().trim(), $("#q5").val().trim(), $("#q6").val().trim(), $("#q7").val().trim(), $("#q8").val().trim(), $("#q9").val().trim(), $("#q10").val().trim()]
+                }
+                
+                var url = window.location.origin;
+                
+                $.post(url + "/api/friends", response, function(res){
+                    console.log(res);
+                    $("#match-name").text(res.name);
+                    $("#profile-image").attr("src", res.photo);
+                    
+                    $('#results').modal();
+                    $('#results').modal("open");
+                });
+                
+                return false;
+            });
         });
     </script>
 </body>
